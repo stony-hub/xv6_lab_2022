@@ -91,3 +91,17 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+// trace
+uint64
+sys_trace(void)
+{
+  int mask;
+  // get mask
+  argint(0, &mask);
+  if (mask < 0)
+    return -1;
+  // save trace mask in pcb
+  myproc()->trace_mask = mask;
+  return 0;
+}
