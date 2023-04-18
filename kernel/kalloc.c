@@ -11,6 +11,7 @@
 
 // page ref cnt
 uint page_ref[(PHYSTOP - KERNBASE) / PGSIZE];
+struct spinlock page_ref_lock;
 
 void freerange(void *pa_start, void *pa_end);
 
@@ -55,7 +56,16 @@ kfree(void *pa)
     panic("kfree");
   
   // Check page ref
-  if (--page_ref[PA_INDEX(pa)] > 0) return;
+  // wrong
+  //if (--page_ref[PA_INDEX(pa)] > 0) return;
+  acquire(&page_ref_lock);
+  if(page_ref[PA_INDEX(pa)] > 1){
+    page_ref[PA_INDEX(pa)]--;
+    release(&page_ref_lock);
+    return;
+  }
+  page_ref[PA_INDEX(pa)] = 0;
+  release(&page_ref_lock);
 
   // Fill with junk to catch dangling refs.
   memset(pa, 1, PGSIZE);
@@ -84,7 +94,9 @@ kalloc(void)
 
   if(r) {
     memset((char*)r, 5, PGSIZE); // fill with junk
+    acquire(&page_ref_lock);
     page_ref[PA_INDEX(r)] = 1;
+    release(&page_ref_lock);
   }
   return (void*)r;
 }

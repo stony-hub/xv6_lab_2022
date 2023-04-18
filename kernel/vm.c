@@ -16,6 +16,7 @@ extern char etext[];  // kernel.ld sets this to end of kernel code.
 extern char trampoline[]; // trampoline.S
 
 extern uint page_ref[]; // kalloc.c
+extern struct spinlock page_ref_lock;
 
 // Make a direct-map page table for the kernel.
 pagetable_t
@@ -329,7 +330,9 @@ uvmcopy(pagetable_t old, pagetable_t new, uint64 sz)
       //kfree(mem);
       goto err;
     }
+    acquire(&page_ref_lock);
     page_ref[PA_INDEX(pa)]++;
+    release(&page_ref_lock);
   }
   return 0;
 
