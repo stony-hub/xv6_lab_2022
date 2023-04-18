@@ -77,8 +77,17 @@ usertrap(void)
     exit(-1);
 
   // give up the CPU if this is a timer interrupt.
-  if(which_dev == 2)
+  if(which_dev == 2) {
+    struct proc *proc = myproc();
+    // alarm_interval == 0 indicates that alarm func is forbbiden
+    if (proc->alarm_interval != 0) {
+      if (++proc->alarm_cnt == proc->alarm_interval) {
+        proc->saved_trapframe = *p->trapframe;
+        proc->trapframe->epc = proc->alarm_handler;
+      }
+    }
     yield();
+  }
 
   usertrapret();
 }
