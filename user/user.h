@@ -1,5 +1,8 @@
 struct stat;
 
+#define size_t uint64
+#define off_t uint64
+
 // system calls
 int fork(void);
 int exit(int) __attribute__((noreturn));
@@ -22,6 +25,8 @@ int getpid(void);
 char* sbrk(int);
 int sleep(int);
 int uptime(void);
+void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset);
+int munmap(void *addr, size_t length);
 
 // ulib.c
 int stat(const char*, struct stat*);
