@@ -174,6 +174,7 @@ mkfs/mkfs: mkfs/mkfs.c $K/fs.h $K/param.h
 UPROGS=\
 	$U/_sleep\
 	$U/_pingpong\
+	$U/_prime\
 	$U/_cat\
 	$U/_echo\
 	$U/_forktest\
