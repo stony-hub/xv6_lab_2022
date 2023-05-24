@@ -70,6 +70,9 @@ usertrap(void)
     // ok
   } else if(r_scause() == 13 || r_scause() == 15) { // page fault
     uint64 va = r_stval();
+
+    if (va >= p->sz || va < p->trapframe->sp) goto fail;
+
     for(int i=0; i<MAXVMA; i++)
     {
       struct VMA *v = &p->vma[i];
@@ -91,6 +94,7 @@ usertrap(void)
       }
     }
   } else {
+    fail:
     printf("usertrap(): unexpected scause %p pid=%d\n", r_scause(), p->pid);
     printf("            sepc=%p stval=%p\n", r_sepc(), r_stval());
     setkilled(p);

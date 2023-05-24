@@ -2123,7 +2123,6 @@ kernmem(char *s)
 {
   char *a;
   int pid;
-  printf("hahaha\n");
 
   for(a = (char*)(KERNBASE); a < (char*) (KERNBASE+2000000); a += 50000){
     pid = fork();
@@ -2621,18 +2620,18 @@ struct test {
   {forktest, "forktest"},
   {sbrkbasic, "sbrkbasic"},
   {sbrkmuch, "sbrkmuch"},
-  //{kernmem, "kernmem"},
-  //{MAXVAplus, "MAXVAplus"},
-  //{sbrkfail, "sbrkfail"},
+  {kernmem, "kernmem"},
+  {MAXVAplus, "MAXVAplus"},
+  {sbrkfail, "sbrkfail"},
   {sbrkarg, "sbrkarg"},
   {validatetest, "validatetest"},
   {bsstest, "bsstest"},
   {bigargtest, "bigargtest"},
   {argptest, "argptest"},
-  //{stacktest, "stacktest"},
-  //{textwrite, "textwrite"},
+  {stacktest, "stacktest"},
+  {textwrite, "textwrite"},
   {pgbug, "pgbug" },
-  //{sbrkbugs, "sbrkbugs" }, unexpected scause
+  {sbrkbugs, "sbrkbugs" },
   {sbrklast, "sbrklast"},
   {sbrk8000, "sbrk8000"},
   {badarg, "badarg" },
