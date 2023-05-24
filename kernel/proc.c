@@ -132,14 +132,6 @@ found:
     return 0;
   }
 
-  // An empty user page table.
-  p->pagetable = proc_pagetable(p);
-  if(p->pagetable == 0){
-    freeproc(p);
-    release(&p->lock);
-    return 0;
-  }
-
   // Allocate usyscall page
     if ((p->usyscallpage = (struct usyscall *)kalloc()) == 0) {
     freeproc(p);
@@ -147,6 +139,14 @@ found:
     return 0;
   }
   p->usyscallpage->pid = p->pid;
+
+  // An empty user page table.
+  p->pagetable = proc_pagetable(p);
+  if(p->pagetable == 0){
+    freeproc(p);
+    release(&p->lock);
+    return 0;
+  }
 
   // Set up new context to start executing at forkret,
   // which returns to user space.
