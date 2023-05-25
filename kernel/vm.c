@@ -320,7 +320,9 @@ uvmcopy(pagetable_t old, pagetable_t new, uint64 sz)
       panic("uvmcopy: page not present");
     pa = PTE2PA(*pte);
     // set copy-on-write PTE
-    flags = PTE_FLAGS((*pte & ~PTE_W) | PTE_C);
+    // pte is a pointer !!!
+    *pte = (*pte & ~PTE_W) | PTE_C;
+    flags = PTE_FLAGS(*pte);
     /*
     if((mem = kalloc()) == 0)
       goto err;

@@ -31,6 +31,7 @@ void
 kinit()
 {
   initlock(&kmem.lock, "kmem");
+  initlock(&page_ref_lock, "page_ref");
   freerange(end, (void*)PHYSTOP);
 }
 
