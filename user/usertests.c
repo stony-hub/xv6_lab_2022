@@ -2628,7 +2628,7 @@ struct test {
   {bsstest, "bsstest"},
   {bigargtest, "bigargtest"},
   {argptest, "argptest"},
-  //{stacktest, "stacktest"},
+  {stacktest, "stacktest"},
   //{textwrite, "textwrite"},
   {pgbug, "pgbug" },
   {sbrkbugs, "sbrkbugs" },
