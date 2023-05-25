@@ -2629,7 +2629,7 @@ struct test {
   {bigargtest, "bigargtest"},
   {argptest, "argptest"},
   {stacktest, "stacktest"},
-  //{textwrite, "textwrite"},
+  {textwrite, "textwrite"},
   {pgbug, "pgbug" },
   {sbrkbugs, "sbrkbugs" },
   {sbrklast, "sbrklast"},

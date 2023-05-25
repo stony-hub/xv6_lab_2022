@@ -65,8 +65,8 @@ usertrap(void)
     intr_on();
 
     syscall();
-  // load / store page fault
-  } else if(/*r_scause() == 13 || */r_scause() == 15){
+  // Store / AMO page fault
+  } else if(r_scause() == 15){
     uint64 va = r_stval();
     if(va >= p->sz)
       p->killed = 1;
